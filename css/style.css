@@ -42,3 +42,17 @@ a {
     display: flex;
     justify-content: space-around;
 }
+.goods-item {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    margin: 20px 0;
+}
+.goods-item img {
+    max-width: 100%;
+    height: auto;
+}
+.desc {
+    padding: 15px;
+    border: 1px solid #c0c0c040;
+}

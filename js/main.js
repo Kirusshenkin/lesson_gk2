@@ -8,9 +8,11 @@ const goods = [
 
 const renderGoodsItem = (title, price, img = '') => {
     return `<div class="goods-item>
-        <img src="${img}" alt="alt">
-        <h3>${title}</h3>
-        <p>${price}</p>
+        <img src=${img} alt="image">
+        <div class="desc">
+            <h3>${title}</h3>
+            <p>${price}</p>
+        </div>
     </div>`
 };
 
@@ -20,4 +22,3 @@ const renderGoodsList = (list, container) => {
 };
 
 renderGoodsList(goods, '.goods-list');
-0
