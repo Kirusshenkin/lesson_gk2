@@ -7,8 +7,8 @@ const goods = [
 ];
 
 const renderGoodsItem = (title, price, img = '') => {
-    return `<div class="goods-item>
-        <img src=${img} alt="image">
+    return `<div class="goods-item">
+        <img src="${img}" alt="image">
         <div class="desc">
             <h3>${title}</h3>
             <p>${price}</p>
