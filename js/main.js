@@ -20,11 +20,12 @@ const renderGoodsList = (list, container) => {
     const goodsList = list.map(good => renderGoodsItem(good.title, good.price, good.img))
     document.querySelector(container).innerHTML = goodsList.join('');
 };
-
+//1. Добавьте пустые классы для корзины товаров и элемента корзины товаров. Продумайте, какие методы понадобятся для работы с этими сущностями.
 class GoodsList {
     constructor() {
         this.goods = [];
     }
+//2. Добавьте для GoodsList метод, определяющий суммарную стоимость всех товаров.
 total() {
     let totalPrice = 0;
     this.goods.forEach(item=> totalPrice + item.price);
