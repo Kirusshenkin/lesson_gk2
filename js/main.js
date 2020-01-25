@@ -1,22 +1,35 @@
 const API_URL = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses';
 
-function makeGetRequest(url, callback) {
-    let xhr;
-    if (window.XMLHttpRequest) {
+
+let makeGetRequest = (API_URL, callback) => {
+    return new Promise((resolve, reject ) => {
         xhr = new window.XMLHttpRequest()
-    } else {
-        xhr = new window.ActiveXObject("Microsoft.XMLHTTP")
-    }
 
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState === 4) {
-            callback(xhr.responseText) //обработка
+        xhr.open('GET', API_URL, true);
+        xhr.onreadystatechange  = () => {
+            callback(xhr.responseText);
+            resolve(callback);
+            reject(console.log('error-404'));
         }
-    };
-
-    xhr.open('GET', url);
-    xhr.send();
+        xhr.open('GET', API_URL);
+        xhr.send();
+    });
 }
+        
+       // let xhr;
+      // if (window.XMLHttpRequest) {
+        //     xhr = new window.XMLHttpRequest()
+        // } else {
+        //     xhr = new window.ActiveXObject("Microsoft.XMLHTTP")
+        // }
+    
+        // xhr.onreadystatechange = function () {
+        //     if (xhr.readyState === 4) {
+        //         callback(xhr.responseText) //обработка
+        //     }
+        // };
+    
+        // xhr.open('GET', url);
 
 class GoodsItem {
     constructor(id, title = 'Без навания', price = 0, img = 'https://via.placeholder.com/250') {
@@ -47,7 +60,12 @@ class GoodsList {
         return this.goods.find(good => good.id === id);
     }
 
-    fetchGoods() {}
+    fetchGoods(callback) {
+        makeGetRequest(`${API_URL}/catalogData.json`, (goods) => {
+            this.goods = JSON.parse(goods);
+            callback();
+        });
+    }
     totalSum() {
         let sum = 0;
         for (const good of this.goods) {
@@ -61,7 +79,7 @@ class GoodsList {
     render() {
         let listHtml = '';
         this.goods.forEach(good => {
-            const goodItem = new GoodsItem(good.id, good.product_name, good.price, good.img);
+            const goodItem = new GoodsItem(good.id_product, good.product_name, good.price, good.img);
             listHtml += goodItem.render();
         })
         this.container.innerHTML = listHtml;
@@ -83,6 +101,7 @@ class GoodsPage extends GoodsList{
             this.goods = JSON.parse(goods);
         callback();
         })
+            // .catch(error => console.log(error));
     }
     addToCart(goodId) {
         const good = this.findGood(goodId);
