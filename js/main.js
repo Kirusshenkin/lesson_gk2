@@ -15,21 +15,6 @@ let makeGetRequest = (API_URL, callback) => {
         xhr.send();
     });
 }
-        
-       // let xhr;
-      // if (window.XMLHttpRequest) {
-        //     xhr = new window.XMLHttpRequest()
-        // } else {
-        //     xhr = new window.ActiveXObject("Microsoft.XMLHTTP")
-        // }
-    
-        // xhr.onreadystatechange = function () {
-        //     if (xhr.readyState === 4) {
-        //         callback(xhr.responseText) //обработка
-        //     }
-        // };
-    
-        // xhr.open('GET', url);
 
 class GoodsItem {
     constructor(id, title = 'Без навания', price = 0, img = 'https://via.placeholder.com/250') {
@@ -39,7 +24,7 @@ class GoodsItem {
         this.img = img;
     }
     render() {
-        return `<div class="goods-item">
+        return `<div class="goods-item" data-id="${this.id}">
             <img src="${this.img}" alt="image">
             <div class="desc">
                 <h3>${this.title}</h3>
@@ -50,6 +35,7 @@ class GoodsItem {
         `;
     }
 }
+
 class GoodsList {
     constructor(container) {
         this.container = document.querySelector(container);
@@ -59,7 +45,9 @@ class GoodsList {
     findGood(id) {
         return this.goods.find(good => good.id === id);
     }
-
+    // addCart(price) {
+    //     return this.goods.add(good => good.price === price);
+    // }
     fetchGoods(callback) {
         makeGetRequest(`${API_URL}/catalogData.json`, (goods) => {
             this.goods = JSON.parse(goods);
@@ -86,12 +74,14 @@ class GoodsList {
         this.initListeners();
     }
 }
-class GoodsPage extends GoodsList{
+
+class GoodsPage extends GoodsList {
     initListeners() {
         const buttons = [... this.container.querySelectorAll('.js-add-to-cart')];
         buttons.forEach(button => {
             button.addEventListener('click', (event) => {
                 const goodId = event.target.parentElement.getAttribute('data-id');
+                // const goodPrice = event.target.parentElement.add()
                 this.addToCart(parseInt(goodId, 10));
             })
         })
@@ -101,12 +91,12 @@ class GoodsPage extends GoodsList{
             this.goods = JSON.parse(goods);
         callback();
         })
-            // .catch(error => console.log(error));
     }
     addToCart(goodId) {
         const good = this.findGood(goodId);
         console.log(good);
     }
+
 }
 class Cart extends GoodsList {
     removeFromCart(goodId) {
@@ -116,7 +106,6 @@ class Cart extends GoodsList {
 
     }
     updateCartItem(id, goods) {
-
     }
 }
 

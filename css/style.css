@@ -38,7 +38,7 @@ button:hover {
     border-color: #fafafa;
     color: #fafafa;
 }
-.desc button {
+.js-add-to-cart {
     background-color: #dadada;
     padding: 10px 20px;
     border: 1px solid transparent;
@@ -47,7 +47,7 @@ button:hover {
     transition: all ease-in-out .4s;
     cursor: pointer;
 }
-.desc button:hover {
+.js-add-to-cart:hover {
     background-color: #000000b0;
     border-color: #fafafa;
     color: #fafafa;
